@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import dj_database_url
+import os
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -90,7 +92,9 @@ WSGI_APPLICATION = 'EmployeeControl.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
+DATABASES = {
+    'default': dj_database_url.parse('postgres://ecproyectdb_user:AptTgvkGw9YT4je26WaYyCPofD6aotAc@dpg-cp2eirol6cac738sp5fg-a.oregon-postgres.render.com/ecproyectdb')
+}
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
@@ -101,16 +105,16 @@ WSGI_APPLICATION = 'EmployeeControl.wsgi.application'
 #         'PORT': '5432',
 #     }
 # }
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'employeecontroldb',
-        'USER': 'root',
-        'PASSWORD': 'Admin1234',
-        'HOST': 'localhost',
-        'PORT': '3306',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'employeecontroldb',
+#         'USER': 'root',
+#         'PASSWORD': 'Admin1234',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     }
+# }
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
@@ -154,6 +158,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+MEDIA_URL = 'media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
