@@ -95,36 +95,7 @@ WSGI_APPLICATION = 'EmployeeControl.wsgi.application'
 DATABASES = {
     'default': dj_database_url.parse('postgres://ecproyectdb_user:AptTgvkGw9YT4je26WaYyCPofD6aotAc@dpg-cp2eirol6cac738sp5fg-a.oregon-postgres.render.com/ecproyectdb')
 }
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'ecproyectdb',
-#         'USER': 'alegrellet',
-#         'PASSWORD': 'w6F59c7d7HKnhIzuvKVVPhzwkOYVLEkr',
-#         'HOST': 'localhost',
-#         'PORT': '5432',
-#     }
-# }
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'employeecontroldb',
-#         'USER': 'root',
-#         'PASSWORD': 'Admin1234',
-#         'HOST': 'localhost',
-#         'PORT': '3306',
-#     }
-# }
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
 
-
-# Password validation
-# https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -165,10 +136,4 @@ MEDIA_URL = 'media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ALLOWED_ORIGINS = [
-    "http://127.0.0.1:5174",  # Existing frontend address
-    "http://localhost:5173",  # Add this line
-    "http://localhost:8081",  # Add this line
-    # Add other domains if necessary
-]
-# CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = True
