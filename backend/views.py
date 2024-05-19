@@ -172,9 +172,11 @@ class DayServiceView(viewsets.ModelViewSet):
 
         employee_id = request.query_params.get('employee_id', None)
         if employee_id is not None:
-            queryset = Service.objects.filter(employee=employee_id, date__range=(start_of_day, end_of_day))
+            queryset = Service.objects.filter(employee=employee_id)
         else:
-            queryset = Service.objects.filter(date__range=(start_of_day, end_of_day))
+            # select all services for today order by name of the employee
+            queryset = Service.objects.all()
+            # queryset = Service.objects.all().order_by()
         serializer = DayServicesSerializer(queryset, many=True)
         return Response(serializer.data)        
 
