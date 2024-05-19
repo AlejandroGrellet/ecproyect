@@ -90,6 +90,13 @@ class EmployeeView(viewsets.ModelViewSet):
             return HttpResponse(serializer.data)
         return HttpResponse(serializer.errors)
     
+    def delete(self, request, pk):
+        employee = Employee.objects.get(pk=pk)
+        user = CustomUser.objects.get(pk=employee.user.id)
+        employee.delete()
+        user.delete()
+        return HttpResponse("Deleted")
+    
 class ServiceTypeView(viewsets.ModelViewSet):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]  
