@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-6((!k^^owjjp%nb0$*pnq4cxmj4pdsvn62huo-y0lcob+&pdd1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.100.35', 'ecproyect.onrender.com']
+ALLOWED_HOSTS = ['192.168.100.35', 'ecproyect.onrender.com','localhost']
 # ALLOWED_HOSTS = ['*']
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [

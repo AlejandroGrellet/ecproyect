@@ -90,10 +90,12 @@ class EmployeeView(viewsets.ModelViewSet):
             return HttpResponse(serializer.data)
         return HttpResponse(serializer.errors)
     
-    def delete(self, request, pk):
-        employee = Employee.objects.get(pk=pk)
-        user = CustomUser.objects.get(pk=employee.user.id)
-        employee.delete()
+    def delete(self, request):
+        manager_id = self.request.query_params.get('manager_id', None)
+        employee_id = self.request.query_params.get('employee_id', None)
+        # employee = Employee.objects.get(pk=employee_id)
+        user = CustomUser.objects.filter(id=employee_id)
+        # employee.delete()
         user.delete()
         return HttpResponse("Deleted")
     
