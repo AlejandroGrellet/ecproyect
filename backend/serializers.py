@@ -6,7 +6,6 @@ class CustomUserSerializer(serializers.ModelSerializer):
         model = CustomUser
         fields = ['id', 'first_name', 'last_name', 'email', 'password', 'state']
 
-
     def create(self, validated_data):
         
         validated_data['username'] = validated_data['first_name'] + "_" + validated_data['last_name']
@@ -74,7 +73,7 @@ class ServiceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Service
-        fields = ['id', 'employee', 'service', 'date']
+        fields = ['id', 'manager', 'employee', 'service', 'date']
 
 class DayServicesSerializer(serializers.ModelSerializer):
     employee = EmployeeSerializer(read_only=True)
@@ -82,4 +81,4 @@ class DayServicesSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Service
-        fields = ['id', 'employee', 'service', 'date']
+        fields = ['id', 'manager', 'employee', 'service', 'date']

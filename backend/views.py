@@ -8,7 +8,7 @@ from rest_framework.views import APIView
 from rest_framework import viewsets
 
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 
@@ -20,6 +20,11 @@ class UserView(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
+
+    def get_permissions(self):
+        if self.request.method in ['POST']:
+            return [AllowAny()]
+        return [IsAuthenticated()]
 
     def get(self, request):
         users = CustomUser.objects.all()
@@ -40,7 +45,7 @@ class UserView(viewsets.ModelViewSet):
             serializer.save()
             return HttpResponse(serializer.data)
         return HttpResponse(serializer.errors)
-    
+     
 class ManagerView(viewsets.ModelViewSet):
     queryset = Manager.objects.all()
     serializer_class = ManagerSerializer
@@ -179,15 +184,16 @@ class DayServiceView(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         date = self.request.query_params.get('date', None)
         employee_id = request.query_params.get('employee_id', None)
+        manager_id = request.query_params.get('manager_id', None)
         if date is not None:
             if employee_id is not None:
-                queryset = Service.objects.filter(employee=employee_id, date=date)
+                queryset = Service.objects.filter(manager=manager_id,employee=employee_id, date=date)
             else:
                 # select all services for today order by name of the employee
-                queryset = Service.objects.filter(date=date)
+                queryset = Service.objects.filter(manager=manager_id,date=date) #.order_by('employee__user__first_name')
                 # queryset = Service.objects.all().order_by()
         else:
-            queryset = Service.objects.all()
+            queryset = Service.objects.filter(manager=manager_id)
         serializer = DayServicesSerializer(queryset, many=True)
         return Response(serializer.data)        
 

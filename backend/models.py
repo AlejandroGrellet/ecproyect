@@ -53,6 +53,7 @@ class ServiceType(models.Model):
         return self.name + "// " + str(self.price)
 
 class Service(models.Model):
+    manager = models.ForeignKey(Manager, on_delete=models.CASCADE)
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
     service = models.ManyToManyField(ServiceType)
     date = models.DateTimeField()
