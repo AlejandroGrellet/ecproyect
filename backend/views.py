@@ -184,7 +184,7 @@ class DayServiceView(viewsets.ModelViewSet):
                 queryset = Service.objects.filter(employee=employee_id, date=date)
             else:
                 # select all services for today order by name of the employee
-                queryset = Service.objects.filter(date=date).order_by('employee__user__first_name')
+                queryset = Service.objects.filter(date=date)
                 # queryset = Service.objects.all().order_by()
         else:
             queryset = Service.objects.all()
