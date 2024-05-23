@@ -182,20 +182,20 @@ class DayServiceView(viewsets.ModelViewSet):
     serializer_class = DayServicesSerializer
 
     def list(self, request, *args, **kwargs):
-        date = self.request.query_params.get('date', None)
+        date_str = self.request.query_params.get('date', None)
         employee_id = request.query_params.get('employee_id', None)
         manager_id = request.query_params.get('manager_id', None)
-        if date is not None:
+        if date_str is not None:
+            date = datetime.strptime(date_str, "%Y-%m-%d").date()  # convert string to date
             if employee_id is not None:
-                queryset = Service.objects.filter(manager=manager_id,employee=employee_id, date=date)
+                queryset = Service.objects.filter(manager=manager_id, employee=employee_id, date__date=date)
             else:
                 # select all services for today order by name of the employee
-                queryset = Service.objects.filter(manager=manager_id,date=date) #.order_by('employee__user__first_name')
-                # queryset = Service.objects.all().order_by()
+                queryset = Service.objects.filter(manager=manager_id, date__date=date)  # filter by date
         else:
             queryset = Service.objects.filter(manager=manager_id)
         serializer = DayServicesSerializer(queryset, many=True)
-        return Response(serializer.data)        
+        return Response(serializer.data)       
 
 class LoginView(APIView):
     # permission_classes = [AllowAny]
