@@ -16,6 +16,8 @@ from .models import *
 from .serializers import *
 
 class UserView(viewsets.ModelViewSet):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
 
@@ -170,22 +172,22 @@ class ServiceView(viewsets.ModelViewSet):
 class DayServiceView(viewsets.ModelViewSet):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated] 
+    
     queryset = Service.objects.all()
     serializer_class = DayServicesSerializer
 
     def list(self, request, *args, **kwargs):
-
-        now = timezone.now()
-        start_of_day = timezone.make_aware(datetime.combine(now, time.min))
-        end_of_day = timezone.make_aware(datetime.combine(now, time.max))
-
+        date = self.request.query_params.get('date', None)
         employee_id = request.query_params.get('employee_id', None)
-        if employee_id is not None:
-            queryset = Service.objects.filter(employee=employee_id)
+        if date is not None:
+            if employee_id is not None:
+                queryset = Service.objects.filter(employee=employee_id, date=date)
+            else:
+                # select all services for today order by name of the employee
+                queryset = Service.objects.filter(date=date).order_by('employee__user__first_name')
+                # queryset = Service.objects.all().order_by()
         else:
-            # select all services for today order by name of the employee
             queryset = Service.objects.all()
-            # queryset = Service.objects.all().order_by()
         serializer = DayServicesSerializer(queryset, many=True)
         return Response(serializer.data)        
 
