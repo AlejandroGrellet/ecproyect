@@ -28,7 +28,7 @@ class ManagerSerializer(serializers.ModelSerializer):
     user = CustomUserSerializer()
     class Meta:
         model = Manager
-        fields = ['user']
+        fields = ['user', 'leasdate']
 
     def create(self, validated_data):
         user_data = validated_data.pop('user')

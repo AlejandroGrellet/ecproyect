@@ -20,7 +20,7 @@ class CustomUser(AbstractUser):
     
 class Manager(models.Model):
     user = models.OneToOneField(CustomUser, primary_key=True, on_delete=models.CASCADE)
-    # leasdate = models.DateField()
+    leasdate = models.DateField(default=None)
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)  # Call the "real" save() method.
         manager_group = Group.objects.get(name='Manager')
